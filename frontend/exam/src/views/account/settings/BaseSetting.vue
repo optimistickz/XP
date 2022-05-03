@@ -72,7 +72,6 @@
 </template>
 
 <script>
-import AvatarModal from './AvatarModal'
 import '../../../plugins/summernote'
 import $ from 'jquery'
 import { updateInfo, getInfo } from '../../../api/login'

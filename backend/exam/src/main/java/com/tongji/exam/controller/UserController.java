@@ -1,5 +1,6 @@
 package com.tongji.exam.controller;
 
+import com.tongji.exam.annotation.ApiCallMonitor;
 import com.tongji.exam.qo.RegisterDTO;
 import com.tongji.exam.entity.User;
 import com.tongji.exam.enums.ResultEnum;
@@ -53,6 +54,7 @@ public class UserController {
      */
     @PostMapping("/login")
     @ApiOperation("根据用户名或邮箱登录,登录成功返回token")
+    @ApiCallMonitor(value = "")
     ResultVO<String> login(@RequestBody LoginQo loginQo) { // 这里不用手机号是因为手机号和用户名难以进行格式区分，而用户名和
         // 用户登录
         ResultVO<String> resultVO;
@@ -74,6 +76,7 @@ public class UserController {
      */
     @GetMapping("/user-info")
     @ApiOperation("获取用户信息")
+    @ApiCallMonitor
     ResultVO<UserVo> getUserInfo(HttpServletRequest request) {
         String userId = (String) request.getAttribute("user_id");
         UserVo userVo = userService.getUserInfo(userId);
@@ -113,6 +116,7 @@ public class UserController {
      */
     @PostMapping("/user-info/update")
     @ApiOperation("修改用户信息")
+    @ApiCallMonitor
     String updateUserInfo(@RequestBody UserInfoQo userInfoQo,HttpServletRequest request){
         String userId = (String) request.getAttribute("user_id");
         String avatar=userInfoQo.getUserAvatar();

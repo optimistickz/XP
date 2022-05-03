@@ -2,6 +2,7 @@ package com.tongji.exam.service.impl;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.IdUtil;
+import com.tongji.exam.annotation.MyLog;
 import com.tongji.exam.qo.RegisterDTO;
 import com.tongji.exam.entity.Action;
 import com.tongji.exam.entity.Page;
@@ -220,6 +221,7 @@ public class UserServiceImpl implements UserService {
      * @return 更新结果，成功返回ok，失败返回null
      */
     @Override
+    @MyLog
     public String updateInfo(UserInfoQo userInfoQo,String user_id) {
         User user=userRepository.findByUserId(user_id);
         if(user==null){

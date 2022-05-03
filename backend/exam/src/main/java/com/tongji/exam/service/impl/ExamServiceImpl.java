@@ -2,6 +2,7 @@ package com.tongji.exam.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.tongji.exam.annotation.MyLog;
 import com.tongji.exam.entity.*;
 import com.tongji.exam.enums.QuestionEnum;
 import com.tongji.exam.repository.*;
@@ -129,6 +130,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @MyLog
     public QuestionVo updateQuestion(QuestionVo questionVo) {
         // 1.把需要的属性都设置好
         StringBuilder questionAnswerOptionIds = new StringBuilder();
@@ -166,6 +168,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @MyLog
     public void questionCreate(QuestionCreateVo questionCreateVo) {
         // 问题创建
         Question question = new Question();
@@ -371,6 +374,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @MyLog
     public Exam create(ExamCreateVo examCreateVo, String userId) {
         // 在线考试系统创建
         Exam exam = new Exam();
@@ -423,6 +427,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @MyLog
     public Exam update(ExamVo examVo, String userId) {
         Exam exam = new Exam();
         BeanUtils.copyProperties(examVo, exam);
@@ -495,6 +500,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @MyLog
     public ExamRecord judge(String userId, String examId, HashMap<String, List<String>> answersMap) {
         // 1.首先获取考试对象和选项数组
         ExamDetailVo examDetailVo = getExamDetail(examId);

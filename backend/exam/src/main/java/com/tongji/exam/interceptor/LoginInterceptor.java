@@ -1,6 +1,7 @@
 package com.tongji.exam.interceptor;
 
 import com.google.gson.Gson;
+import com.tongji.exam.utils.Audit.AuditUtil;
 import com.tongji.exam.utils.JwtUtils;
 import com.tongji.exam.vo.JsonData;
 import io.jsonwebtoken.Claims;
@@ -20,10 +21,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Value("${interceptors.auth-ignore-uris}")
     private String authIgnoreUris;
+    private static Integer traceId=0;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("进入拦截器:");
+        traceId++;
         String uri = request.getRequestURI();
         System.out.println(uri);
         System.out.println("无需拦截的接口路径：" + authIgnoreUris);
@@ -49,8 +52,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             }
 
             String id = (String) claims.get("id");
-
             String username = (String) claims.get("username");
+            AuditUtil.setTraceIdLocal(traceId);
+            AuditUtil.setUserIdLocal(id);
+            AuditUtil.setUserNameLocal(username);
             request.setAttribute("user_id", id);
             request.setAttribute("username", username);
             return true;

@@ -1,6 +1,7 @@
 package com.tongji.exam.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tongji.exam.annotation.ExcludeField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class UserInfoVo {
 
     @JsonProperty("avatar")
     @NotEmpty
+    @ExcludeField
     private String userAvatar;
 
     @JsonProperty("name")

@@ -3,6 +3,7 @@ package com.tongji.exam.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tongji.exam.annotation.ExcludeField;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ public class ExamVo {
     @JsonProperty("name")
     private String examName;
     @JsonProperty("avatar")
+    @ExcludeField
     private String examAvatar;
     @JsonProperty("desc")
     private String examDescription;

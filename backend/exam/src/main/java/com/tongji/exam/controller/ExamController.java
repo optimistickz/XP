@@ -1,5 +1,6 @@
 package com.tongji.exam.controller;
 
+import com.tongji.exam.annotation.ApiCallMonitor;
 import com.tongji.exam.entity.Exam;
 import com.tongji.exam.entity.ExamRecord;
 import com.tongji.exam.service.ExamService;
@@ -26,6 +27,7 @@ public class ExamController {
      */
     @ApiOperation("获取全部考试的列表")
     @GetMapping("/all")
+    @ApiCallMonitor
     ResultVO<List<ExamVo>> getExamAll() {
         //需要拼接前端需要的考试列表对象
         ResultVO<List<ExamVo>> resultVO;
@@ -45,6 +47,7 @@ public class ExamController {
      */
     @GetMapping("/question/type/list")
     @ApiOperation("获取问题分类返回")
+    @ApiCallMonitor
     ResultVO<ExamQuestionTypeVo> getExamQuestionTypeList() {
         // 获取问题的分类列表
         ResultVO<ExamQuestionTypeVo> resultVO;
@@ -66,6 +69,7 @@ public class ExamController {
      */
     @PostMapping("/create")
     @ApiOperation("创建考试")
+    @ApiCallMonitor
     ResultVO<Exam> createExam(@RequestBody ExamCreateVo examCreateVo, HttpServletRequest request) {
         // 从前端传参数过来，在这里完成考试的入库
         ResultVO<Exam> resultVO;
@@ -88,6 +92,7 @@ public class ExamController {
      */
     @PostMapping("/update")
     @ApiOperation("更新考试")
+    @ApiCallMonitor
     ResultVO<Exam> updateExam(@RequestBody ExamVo examVo, HttpServletRequest request) {
         // 从前端传参数过来，在这里完成考试的入库
         ResultVO<Exam> resultVO;
@@ -108,6 +113,7 @@ public class ExamController {
      */
     @GetMapping("/card/list")
     @ApiOperation("获取考试列表，适配前端卡片列表")
+    @ApiCallMonitor
     ResultVO<List<ExamCardVo>> getExamCardList() {
         // 获取考试列表卡片
         ResultVO<List<ExamCardVo>> resultVO;
@@ -128,6 +134,7 @@ public class ExamController {
      */
     @GetMapping("/detail/{id}")
     @ApiOperation("根据考试的id，获取考试详情")
+    @ApiCallMonitor
     ResultVO<ExamDetailVo> getExamDetail(@PathVariable String id) {
         // 根据id获取考试详情
         ResultVO<ExamDetailVo> resultVO;
@@ -149,6 +156,7 @@ public class ExamController {
      */
     @PostMapping("/finish/{examId}")
     @ApiOperation("根据用户提交的答案对指定id的考试判分")
+    @ApiCallMonitor
     ResultVO<ExamRecord> finishExam(@PathVariable String examId, @RequestBody HashMap<String, List<String>> answersMap, HttpServletRequest request) {
         ResultVO<ExamRecord> resultVO;
         try {
@@ -171,6 +179,7 @@ public class ExamController {
      */
     @GetMapping("/record/list")
     @ApiOperation("获取当前用户的考试记录")
+    @ApiCallMonitor
     ResultVO<List<ExamRecordVo>> getExamRecordList(HttpServletRequest request) {
         ResultVO<List<ExamRecordVo>> resultVO;
         try {
@@ -192,6 +201,7 @@ public class ExamController {
      */
     @GetMapping("/record/detail/{recordId}")
     @ApiOperation("根据考试记录id获取考试记录详情")
+    @ApiCallMonitor
     ResultVO<RecordDetailVo> getExamRecordDetail(@PathVariable String recordId) {
         ResultVO<RecordDetailVo> resultVO;
         try {
