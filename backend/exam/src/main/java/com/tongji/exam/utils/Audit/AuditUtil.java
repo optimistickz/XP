@@ -40,9 +40,9 @@ public class AuditUtil {
         userIdLocal.set(userId);
     }
 
-    public static Integer getUserId()
+    public static String getUserId()
     {
-        return traceIdLocal.get();
+        return (String)userIdLocal.get();
     }
 
     public static void setUserNameLocal(String userName)
@@ -50,8 +50,8 @@ public class AuditUtil {
         userNameLocal.set(userName);
     }
 
-    public static Integer getUserName()
+    public static String getUserName()
     {
-        return traceIdLocal.get();
+        return userNameLocal.get();
     }
 }

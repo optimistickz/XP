@@ -2,6 +2,7 @@ package com.tongji.exam.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tongji.exam.annotation.ExcludeField;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -16,6 +17,7 @@ public class Exam {
     @Id
     private String examId;
     private String examName;
+    @ExcludeField
     private String examAvatar;
     private String examDescription;
     private String examQuestionIds;

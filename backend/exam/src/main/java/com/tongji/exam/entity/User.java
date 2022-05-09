@@ -2,6 +2,7 @@ package com.tongji.exam.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tongji.exam.annotation.ExcludeField;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -19,6 +20,7 @@ public class User {
     private String userNickname;
     private String userPassword;
     private Integer userRoleId;
+    @ExcludeField
     private String userAvatar;
     private String userDescription;
     private String userEmail;

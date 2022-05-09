@@ -5,10 +5,16 @@ import com.tongji.exam.utils.Audit.AuditUtil;
 import com.tongji.exam.utils.JwtUtils;
 import com.tongji.exam.vo.JsonData;
 import io.jsonwebtoken.Claims;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -21,19 +27,24 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Value("${interceptors.auth-ignore-uris}")
     private String authIgnoreUris;
-    private static Integer traceId=0;
+
+    @Resource
+    private RedisTemplate redisTemplate;
+
+    //private static StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("进入拦截器:");
-        traceId++;
         String uri = request.getRequestURI();
-        System.out.println(uri);
-        System.out.println("无需拦截的接口路径：" + authIgnoreUris);
+        System.out.println("进入拦截器:"+uri);
+        AuditUtil.setTraceIdLocal(Math.toIntExact(redisTemplate.opsForValue().increment("trace-id",1)));
+
         String[] authIgnoreUriArr = authIgnoreUris.split(",");
         // 登录和注册相关接口不需要进行token拦截和校验，直接返回true
         for (String authIgnoreUri : authIgnoreUriArr) {
             if (authIgnoreUri.equals(uri)) {
+                AuditUtil.setUserNameLocal(authIgnoreUri);
                 return true;
             }
         }
@@ -53,7 +64,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
             String id = (String) claims.get("id");
             String username = (String) claims.get("username");
-            AuditUtil.setTraceIdLocal(traceId);
             AuditUtil.setUserIdLocal(id);
             AuditUtil.setUserNameLocal(username);
             request.setAttribute("user_id", id);
@@ -72,4 +82,21 @@ public class LoginInterceptor implements HandlerInterceptor {
         writer.close();
         response.flushBuffer();
     }
+    /**
+     * 如果key和value都使用的StringRedisSerializer序列化器，则推荐使用StringRedisTemplate
+     *
+     * 配置Redis的Key和Value的序列化器
+     * @param redisTemplate 从容器中获取RedisTemplate
+     * @return 修改后的RedisTemple
+     */
+    @Bean
+    public RedisTemplate<Object, Object> redisStringTemplate(RedisTemplate<Object, Object> redisTemplate) {
+        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        // 如果手动将Value转换成了JSON，就不要再用JSON序列化器了。
+        // redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        redisTemplate.setValueSerializer(stringRedisSerializer);
+        return redisTemplate;
+    }
+
 }

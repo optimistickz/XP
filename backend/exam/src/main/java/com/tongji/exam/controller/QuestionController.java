@@ -14,7 +14,7 @@ import java.util.List;
 
 
 /**
- * created by kzon
+ * created by kz on
  */
 @RestController
 @Api(tags = "Question APIs")
@@ -29,7 +29,7 @@ public class QuestionController {
      */
     @GetMapping("/question/all")
     @ApiOperation("获取所有问题的列表")
-    @ApiCallMonitor
+    @ApiCallMonitor(value = "获取所有问题的列表" )
     ResultVO<List<QuestionVo>> getQuestionAll() {
         ResultVO<List<QuestionVo>> resultVO;
         try {
@@ -49,7 +49,7 @@ public class QuestionController {
      */
     @PostMapping("/question/update")
     @ApiOperation("更新问题")
-    @ApiCallMonitor
+    @ApiCallMonitor(value = "更新问题")
     ResultVO<QuestionVo> questionUpdate(@RequestBody QuestionVo questionVo) {
         // 完成问题的更新
         System.out.println(questionVo);
@@ -70,7 +70,7 @@ public class QuestionController {
      */
     @PostMapping("/question/create")
     @ApiOperation("创建问题")
-    @ApiCallMonitor
+    @ApiCallMonitor("创建问题")
     ResultVO<String> questionCreate(@RequestBody QuestionCreateSimplifyVo questionCreateSimplifyVo, HttpServletRequest request) {
         QuestionCreateVo questionCreateVo = new QuestionCreateVo();
         // 把能拷贝过来的属性都拷贝过来
@@ -94,7 +94,7 @@ public class QuestionController {
      */
     @GetMapping("/question/selection")
     @ApiOperation("获取问题分类的相关选项")
-    @ApiCallMonitor
+    @ApiCallMonitor("获取问题分类的相关选项")
     ResultVO<QuestionSelectionVo> getSelections() {
         QuestionSelectionVo questionSelectionVo = examService.getSelections();
         if (questionSelectionVo != null) {
@@ -111,7 +111,7 @@ public class QuestionController {
      */
     @GetMapping("/question/detail/{id}")
     @ApiOperation("根据问题的id获取问题的详细信息")
-    @ApiCallMonitor
+    @ApiCallMonitor(value = "根据问题的id获取问题的详细信息")
     ResultVO<QuestionDetailVo> getQuestionDetail(@PathVariable String id) {
         //  根据问题id获取问题的详细信息
         System.out.println(id);

@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class JwtUtils {
     //构建token的主题
-    private static final String SUBJECT = "lsg_exam";
+    private static final String SUBJECT = "exam";
     //过期时间为1天
     private static final long EXPIRE = 1000 * 60 * 60 * 24;
 

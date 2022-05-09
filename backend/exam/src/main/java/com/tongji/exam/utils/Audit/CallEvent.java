@@ -17,7 +17,13 @@ public class CallEvent {
 
     private String userName;
 
+    private String description;
+
+    private Integer limit;
+
     private String type;
+
+    private Integer expire;
 
     private String uri;
 
@@ -29,7 +35,7 @@ public class CallEvent {
 
     private String respTime;
 
-    private String param;
+    private Object param;
 
     private Object result;
 

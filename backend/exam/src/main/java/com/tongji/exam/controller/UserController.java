@@ -90,6 +90,7 @@ public class UserController {
      */
     @GetMapping("/info")
     @ApiOperation("获取用户的详细信息，包括个人信息页面和操作权限")
+    @ApiCallMonitor
     ResultVO<UserInfoVo> getInfo(HttpServletRequest request) {
         System.out.println("进入/user/info的获取用户信息的接口");
         String userId = (String) request.getAttribute("user_id");

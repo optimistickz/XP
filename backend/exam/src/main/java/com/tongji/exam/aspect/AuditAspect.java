@@ -1,6 +1,7 @@
 package com.tongji.exam.aspect;
 
 
+import com.tongji.exam.annotation.MyLog;
 import com.tongji.exam.entity.Record;
 import com.tongji.exam.repository.RecordRepository;
 import com.tongji.exam.utils.Audit.AuditUtil;
@@ -32,13 +33,24 @@ public class AuditAspect {
     }
 
     //切面 配置通知
-    @Before("logPointCut()")         //AfterReturning
-    public void saveOperation(JoinPoint joinPoint) {
+    @Before("logPointCut()&&@annotation(annotation)")         //AfterReturning
+    public void saveOperation(JoinPoint joinPoint, MyLog annotation) {
+        if("off".equals(annotation.value()))
+        {
+            return;
+        }
         //用于保存日志
         Record record = new Record();
-
-        record.setTraceid(AuditUtil.getTraceId());
-        System.out.println("切面成功-------");
+        Integer traceId = AuditUtil.getTraceId();
+        if(traceId==null)
+        {
+            record.setTraceId(0);
+        }
+        else
+        {
+            record.setTraceId(AuditUtil.getTraceId());
+        }
+        record.setCaller(AuditUtil.getUserName());
         recordRepository.save(record);
     }
 

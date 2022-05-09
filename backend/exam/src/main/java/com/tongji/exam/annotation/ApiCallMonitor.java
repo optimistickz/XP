@@ -11,5 +11,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME) //注解在哪个阶段执行
 @Documented
 public @interface ApiCallMonitor {
-    String value() default "";
+    String value() default "普通接口";
+    int limit() default -1;
+    String type() default "user";
+    int expire() default 300;
+    String specialHandle() default "no";
 }

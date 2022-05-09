@@ -1,5 +1,6 @@
 package com.tongji.exam.controller;
 
+import com.tongji.exam.annotation.ApiCallMonitor;
 import com.tongji.exam.qo.DownloadQo;
 import com.tongji.exam.qo.UploadModel;
 import com.tongji.exam.qo.UploadModel2;
@@ -40,6 +41,7 @@ public class UploadDownloadController {
      */
     @ApiOperation("单文件上传,支持同时传入文件读取模式参数")
     @PostMapping("/upload/single/model")
+    @ApiCallMonitor
     public String singleUploadFileModel(@ModelAttribute("model") UploadModel2 model) {
         return FileTransUtil.uploadFile(model.getFile(), model.getDir());
     }
@@ -75,6 +77,7 @@ public class UploadDownloadController {
      */
     @ApiOperation("Get下载文件")
     @GetMapping(value = "/download/get")
+    @ApiCallMonitor
     public ResponseEntity<InputStreamResource> downloadFileGet(@RequestParam String filePath) throws IOException {
         return FileTransUtil.downloadFile(filePath);
     }

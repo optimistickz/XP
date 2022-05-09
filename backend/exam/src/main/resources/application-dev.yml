@@ -8,9 +8,21 @@ spring:
     url: jdbc:mysql://www.csystd.cn:3306/exam?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     hikari:
       minimum-idle: 5
-      idle-timeout: 600000
+      idle-timeout: 60000
       maximum-pool-size: 10
-      max-lifetime: 18000000
+      max-lifetime: 180000
+
+  redis:
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+    timeout: 5000
+    host: 81.68.91.157
+    password: AuditRedis
+
+
   jpa:
     # 调试的时候用，打印SQL语句
     show-sql: false
@@ -53,4 +65,4 @@ server:
 # 拦截器相关的配置
 interceptors:
   # 不需要进行拦截的接口地址，用逗号隔开
-  auth-ignore-uris: ${server.servlet.context-path}/user/register,${server.servlet.context-path}/user/login,${server.servlet.context-path}/user/getSmsCaptcha
+  auth-ignore-uris: ${server.servlet.context-path}/user/register,${server.servlet.context-path}/user/login

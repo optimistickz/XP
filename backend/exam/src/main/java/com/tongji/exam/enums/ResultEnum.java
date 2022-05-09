@@ -1,5 +1,6 @@
 package com.tongji.exam.enums;
 
+import com.tongji.exam.annotation.ExcludeField;
 import lombok.Getter;
 
 @Getter

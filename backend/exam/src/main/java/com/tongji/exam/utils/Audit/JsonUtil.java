@@ -14,6 +14,7 @@ public class JsonUtil {
     private static ExclusionStrategy exclusionStrategy = new ExclusionStrategy() {
         @Override
         public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+
             return fieldAttributes.getAnnotation(ExcludeField.class)!=null;
         }
 
@@ -27,5 +28,10 @@ public class JsonUtil {
     public static String toJsonString(Object object)
     {
         return gson.toJson(object);
+    }
+
+    public static  Gson getGson()
+    {
+        return gson;
     }
 }

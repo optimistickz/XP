@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @Entity
-public class ExamRecord {
+public class  ExamRecord {
     /**
      * 主键
      */
